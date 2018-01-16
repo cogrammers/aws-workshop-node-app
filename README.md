@@ -13,3 +13,7 @@ To start:
 ```shell
 $ nodemon    
 ```
+Open in browser:
+```
+localhost:3000
+```
