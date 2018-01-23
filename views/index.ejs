@@ -10,10 +10,11 @@
     <section class="section">
       <div class="container">
         <h1><%= title %></h1>
-        <ul>
         <% projects.forEach(function(a) { %>
-          <li><%= a.title %></li>
-          <li><%= a.description %></li>
+          <div class="card">
+            <%= a.title %>
+            <a href="/projects/<%= project.id %>"><%= a.title %></a>
+          </div>
         <% }) %>
       </ul>
       </div>

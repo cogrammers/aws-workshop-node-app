@@ -21,5 +21,11 @@ router.get('/projects', function(req, res) {
   })
 })
 
+router.get('/projects/:id', function(req, res) {
+  models.Project.findOne({}_id: req.params.id).then(function(project) {
+    res.render('show', { title: 'Projects', project: project })
+  })
+})
+
 
 module.exports = router;
