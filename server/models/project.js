@@ -3,16 +3,16 @@ module.exports = (sequelize, DataTypes) => {
   const Project = sequelize.define('Project', {
     title: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
     },
     description: {
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
     },
     githubLink: {
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
     },
     imageLink: {
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
     },
   });
 

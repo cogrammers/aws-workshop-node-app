@@ -22,7 +22,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 require('./server/routes')(app);
 app.get('*', (req, res) => res.status(200).send({
-  message: 'Don\'t know where this is going...',
+  message: 'Don\'t know where this is going but this has a star for the route...',
 }));
 
 // catch 404 and forward to error handler

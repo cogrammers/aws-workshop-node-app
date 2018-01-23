@@ -14,8 +14,11 @@ module.exports = {
   },
   list(req, res) {
     return Project
-      .all()
-      .then(projects => res.status(200).send(projects))
-      .catch(error => res.status(400).send(error));
+      .findAll()
+      .then((projects) => res.render('index', {
+        title: 'Projects',
+        projects: projects
+      })
+      .catch((error) => res.status(400).send(error));
   },
 };
