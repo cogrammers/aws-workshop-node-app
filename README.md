@@ -8,6 +8,7 @@ $ cd aws-workshop-node-app
 Open up repo and install dependencies:    
 ```shell
 $ npm install
+$ npm install --save sequelize-cli
 ```
 In `config.json`, change `username` to your root username (you can find this by running `$ echo $USER` in your console)    
 
