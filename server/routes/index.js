@@ -1,12 +1,25 @@
-const projectsController = require('../controllers').projects;
+var models = require('../models/index');
+const express = require('express');
+const router = express.Router();
 
-module.exports = (app) => {
-  app.get('/', (req, res) =>
-    res.status(200).send({
-      message: 'Landing Page!',
-  }));
-  
-  app.post('/projects', projectsController.create);
-  app.get('/projects', projectsController.list);
+router.get('/', function(req, res, next) {
+  res.render('index', { title: 'Yo!' });
+});
 
-}
+router.post('/projects', function(req, res) {
+  models.Project.create({
+    title: req.body.title,
+    description: req.body.description
+  }).then(function(project) {
+    res.json(project);
+  })
+})
+
+router.get('/projects', function(req, res) {
+  models.Project.findAll({}).then(function(projects) {
+    res.render('index', { title: 'Projects', projects: projects })
+  })
+})
+
+
+module.exports = router;

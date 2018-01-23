@@ -1,4 +1,3 @@
-'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('Projects', {
@@ -6,32 +5,29 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER,
+        type: Sequelize.INTEGER
       },
       title: {
         allowNull: false,
-        type: Sequelize.STRING,
+        type: Sequelize.STRING
       },
       description: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING
       },
       githubLink: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING
       },
       imageLink: {
-        type: Sequelize.STRING,
-      }
+        type: Sequelize.STRING
+      },
       createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE,
+        type: Sequelize.DATE
       },
       updatedAt: {
-        allowNull: false,
-        type: Sequelize.DATE,
+        type: Sequelize.DATE
       }
     });
   },
-  down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Projects');
+  down: (queryInterface) => {  queryInterface.dropTable('Projects');
   }
 };

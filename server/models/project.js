@@ -1,20 +1,12 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const Project = sequelize.define('Project', {
-    title: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    description: {
-      type: DataTypes.STRING,
-    },
-    githubLink: {
-      type: DataTypes.STRING,
-    },
-    imageLink: {
-      type: DataTypes.STRING,
-    },
+    title: DataTypes.STRING,
+    description: DataTypes.STRING,
+    githubLink: DataTypes.STRING,
+    imageLink: DataTypes.STRING,
+    createdAt: DataTypes.DATE,
+    updatedAt: DataTypes.DATE
   });
-
   return Project;
 };
