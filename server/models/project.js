@@ -17,12 +17,4 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   return Project;
-}
-//     classMethods: {
-//       associate: function(models) {
-//         // associations can be defined here
-//       }
-//     }
-//   });
-//   return Project;
-// };
+};

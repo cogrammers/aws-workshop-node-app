@@ -6,10 +6,7 @@ module.exports = (app) => {
       message: 'Welcome!',
   }));
 
-  app.get('/projects', (req, res) =>
-    res.status(200).send({
-      message: 'Projects Page',
-  }));
-
+  app.get('/projects', projectsController.list);
   app.post('/projects', projectsController.create);
+  
 }
