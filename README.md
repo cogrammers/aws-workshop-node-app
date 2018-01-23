@@ -9,6 +9,12 @@ Open up repo and install dependencies:
 ```shell
 $ npm install
 ```
+In `config.json`, change `username` to your root username (you can find this by running `$ echo $USER` in your console)    
+Set up database:    
+```shell
+$ node_modules/.bin/sequelize db:create
+$ node_modules/.bin/sequelize db:migrate
+```
 To start:  
 ```shell
 $ nodemon    
