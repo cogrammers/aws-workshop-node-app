@@ -13,7 +13,7 @@
         <% projects.forEach(function(a) { %>
           <div class="card">
             <%= a.title %>
-            <a href="/projects/<%= project.id %>"><%= a.title %></a>
+            <a href="/projects/<%= a.id %>"><%= a.title %></a>
           </div>
         <% }) %>
       </ul>
