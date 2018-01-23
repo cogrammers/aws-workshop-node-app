@@ -9,6 +9,7 @@ Open up repo and install dependencies:
 ```shell
 $ npm install
 $ npm install --save sequelize-cli
+$ npm install --save pg@6 pg-hstore
 ```
 In `config.json`, change `username` to your root username (you can find this by running `$ echo $USER` in your console)    
 
