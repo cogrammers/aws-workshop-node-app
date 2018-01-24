@@ -12,7 +12,7 @@ router.post('/projects', function(req, res) {
     description: req.body.description,
     githubLink: req.body.githubLink
   }).then(function(project) {
-    res.json(project);
+    res.render('show', { title: 'My Project', project: project })
   })
 })
 
