@@ -9,7 +9,8 @@ router.get('/', function(req, res, next) {
 router.post('/projects', function(req, res) {
   models.Project.create({
     title: req.body.title,
-    description: req.body.description
+    description: req.body.description,
+    githubLink: req.body.githubLink
   }).then(function(project) {
     res.json(project);
   })
