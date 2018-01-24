@@ -9,11 +9,17 @@
         <h1 class="title is-3"><%= title %></h1>
         <div class="cards">
             <% projects.forEach(function(a) { %>
-
-                <a href="/projects/<%= a.id %>"><%= a.title %></a>
+              <p>
+                <a href="/projects/<%= a.id %>" style="font-size: 16px;"><%= a.title %></a>
+              </p>
+              <br />
             <% }) %>
         </div>
-        <a href="/projects/new" class="title is-2">Add a Project</a>
+        <br />
+        <br />
+        <br />
+        <br />
+        <a href="/projects/new" class="button is-light">Add a Project</a>
       </div>
     </section>
   </body>
