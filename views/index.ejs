@@ -1,22 +1,19 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= title %></title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <% include ./_header %>
   </head>
   <body>
     <section class="section">
-      <div class="container">
-        <h1><%= title %></h1>
-        <% projects.forEach(function(a) { %>
-          <div class="card">
-            <%= a.title %>
-            <a href="/projects/<%= a.id %>"><%= a.title %></a>
-          </div>
-        <% }) %>
-      </ul>
+      <div class="container flex-container" style="width: 95%;">
+        <h1 class="title is-3"><%= title %></h1>
+        <div class="cards">
+            <% projects.forEach(function(a) { %>
+
+                <a href="/projects/<%= a.id %>"><%= a.title %></a>
+            <% }) %>
+        </div>
+        <a href="/projects/new">Add a Project</a>
       </div>
     </section>
   </body>
