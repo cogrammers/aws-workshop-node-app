@@ -15,7 +15,8 @@ $ npm install
 $ npm install --save sequelize-cli
 $ npm install --save pg@6 pg-hstore
 ```
-In `config.json`, change `username` to your root username (you can find this by running `$ echo $USER` in your console)    
+In `config.json`, change `username` to your root username (you can find this by running `$ echo $USER` in your console)   
+
 Start postgres and create local database:    
 ```shell 
 $ brew services start postgresql
