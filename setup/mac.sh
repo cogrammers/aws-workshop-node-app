@@ -17,8 +17,8 @@ npm install --save pg@6 pg-hstore
 
 echo "Setting up config file"
 export REPLACEMENT="\"username\": \"$USER\","
-sed -i.bak 's/"username".*/'"$REPLACEMENT"'/g' server/config.json
-rm server/config.json.bak
+sed -i.bak 's/"username".*/'"$REPLACEMENT"'/g' server/config/db_config.json
+rm server/config/db_config.json.bak
 
 echo "Migrating the database"
 ./node_modules/.bin/sequelize db:migrate
