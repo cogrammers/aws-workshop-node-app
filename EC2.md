@@ -142,59 +142,59 @@ Copy the instance’s IP.
 
 We are going to move the instance into our ssh folder and give read-and-write access to only ourselves with these commands.
 
-`$ cd ~ `
+`$ cd ~ `    
 This makes sure that we are in our root directory:
 
-`$ mv Downloads/demo-portfolio.pem ~/.ssh/`
+`$ mv Downloads/demo-portfolio.pem ~/.ssh/`    
 This moves the instance download to your ssh directory.
 
 **If the response is that you do not have an ssh directory, then use this command:** `$ mkdir .ssh && chmod 700 .ssh` **Then proceed with the previous command.** 
 
-`$ ls -alh .ssh`
+`$ ls -alh .ssh`    
 This will list the accessibility permissions. You can see in the image below that too many people have permissions: -rw-r — r — (owner can read/write, group can read, everyone can read)
 
-`$ chmod 600 .ssh/demo-portfolio.pem`
+`$ chmod 600 .ssh/demo-portfolio.pem`    
 This command ensures that only I have access to read/write now as seen with the following command.
 
-`$ ls -alh .ssh `
+`$ ls -alh .ssh `    
 Now that our permissions are set, let’s log in to the instance’s SSH.
 
-`$ ssh ubuntu@<paste IP> -i .ssh/demo-portfolio.pem`
+`$ ssh ubuntu@<paste IP> -i .ssh/demo-portfolio.pem`    
 Logging into our instance.
 
-`$ yes `
+`$ yes `    
 The first time you log into an instance, you need to give your fingerprint.
 
-`$ exit`
+`$ exit`    
 We will exit the instance for now and add our key as an identity so that we don’t always have to specify which key we want to use.
 
-`$ ssh-add -l`
+`$ ssh-add -l`    
 Lists identities. Our key is not listed yet.
 
-`$ ssh-add .ssh/demo-portfolio.pem`
+`$ ssh-add .ssh/demo-portfolio.pem`    
 Adds our key as identity
 
-`$ ssh-add -l`
+`$ ssh-add -l`    
 See key as identity now
 
-`$ ssh ubuntu@<IP>`
+`$ ssh ubuntu@<IP>`    
 And we are in the instance again — this time with a shorter command
 
-`$ sudo apt-get update `
+`$ sudo apt-get update `    
 Installs all recent package listings
 
-`$ sudo apt-get install -y nginx nodejs npm postgresql postgresql-contrib`
+`$ sudo apt-get install -y nginx nodejs npm postgresql postgresql-contrib`    
 Installs NGINX, a super reliable web-server.
 
-`$ sudo update-rc.d postgresql enable`
+`$ sudo update-rc.d postgresql enable`    
 Set Postgres to start every time the instance launches
 
-`$ sudo -u postgresql psql --command "ALTER USER postgres WITH PASSWORD '<YOUR-PASSWORD-HERE>';" `
+`$ sudo -u postgresql psql --command "ALTER USER postgres WITH PASSWORD '<YOUR-PASSWORD-HERE>';" `    
 
-`$ sudo vim /etc/postgresql/9.6/main/pg_hba.conf`
+`$ sudo vim /etc/postgresql/9.6/main/pg_hba.conf`    
 Change peer to trust (restart required)
 
-`$ sudo vim /etc/postgresql/9.6/main/postgresql.conf`
+`$ sudo vim /etc/postgresql/9.6/main/postgresql.conf`    
 Change `listen_addresses = 'localhost'` to `listen_addresses = '*'`
 
 ```
@@ -206,7 +206,7 @@ Hit `ctrl-d`
 
 **FORK first**: `$ git clone https://github.com/<YOUR_USERNAME>/aws-workshop-node-app.git`
 
-`$ sudo -u postgres createdb cogrammers-aws-dev`
+`$ sudo -u postgres createdb cogrammers-aws-dev`    
 Create our database
 
 ```
@@ -222,10 +222,10 @@ $ pm2 start ./bin/www
 ```
 Sets our app to always be running in the background
 
-`$ wget -q -O - 'http://169.254.169.254/latest/meta-data/local-ipv4'`
+`$ wget -q -O - 'http://169.254.169.254/latest/meta-data/local-ipv4'`    
 Gives us the IP address of the machine
 
-`$ sudo vim /etc/nginx/sites-available/default`
+`$ sudo vim /etc/nginx/sites-available/default`    
 Change `server_name: _` to `server_name: *.amazonaws.com`
 
 ```
