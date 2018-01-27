@@ -55,7 +55,7 @@ In the left-hand dashboard, select the AWS Marketplace tab and search for `Ubunt
 
 ![](https://cdn-images-1.medium.com/max/720/1*cZLjVcIbVJUoGOvpvNf2YQ.png)
 
-The way to know that you are choosing the right one is via the Ubuntu Cloud Image Finder.
+The way to know that you are choosing the right one is via the [Ubuntu Cloud Image Finder](https://cloud-images.ubuntu.com/locator/).
 Once there, search for your server’s region. You can find your server’s searchable region in your aws console url. 
 
 ![](https://cdn-images-1.medium.com/max/720/1*TpPNVsznZ3gfzRbNitD98Q.png)
@@ -144,7 +144,7 @@ Copy the instance’s IP.
 
 ### Open up your local terminal and set permissions on our instance
 
-*(If at any point, you would like to know more about what exactly these commands are doing, check out this beautiful site.)*
+*(If at any point, you would like to know more about what exactly these commands are doing, check out [this beautiful site](https://www.explainshell.com/).)*
 
 We are going to move the instance into our ssh folder and give read-and-write access to only ourselves with these commands.
 
@@ -202,19 +202,19 @@ Yes, we want to take up additional space with NGINX.
 ### Install Linuxbrew on your Ubuntu instance
 Linuxbrew is the Homebrew package manager for Linux.
 
-`$ sudo mkdir /home/linuxbrew    
-$ sudo chown $USER:$USER /home/linuxbrew    
-$ git clone https://github.com/Linuxbrew/brew.git /home/linuxbrew/.linuxbrew    
-$ echo 'export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"' >> ~/.profile    
-$ echo 'export MANPATH="/home/linuxbrew/.linuxbrew/share/man:$MANPATH"' >> ~/.profile    
-$ echo 'export INFOPATH="/home/linuxbrew/.linuxbrew/share/info:$INFOPATH"' >> ~/.profile    
-$ source ~/.profile    
-$ brew tap homebrew/core     
-$ brew update    
-$ brew doctor`
+`$ sudo mkdir /home/linuxbrew`    
+`$ sudo chown $USER:$USER /home/linuxbrew`    
+`$ git clone https://github.com/Linuxbrew/brew.git /home/linuxbrew/.linuxbrew`    
+`$ echo 'export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"' >> ~/.profile`    
+`$ echo 'export MANPATH="/home/linuxbrew/.linuxbrew/share/man:$MANPATH"' >> ~/.profile`    
+`$ echo 'export INFOPATH="/home/linuxbrew/.linuxbrew/share/info:$INFOPATH"' >> ~/.profile`    
+`$ source ~/.profile`    
+`$ brew tap homebrew/core`     
+`$ brew update` 
+`$ brew doctor`
 
 ### Install Node and clone our Node project
-If you haven’t already, fork our demo-portfolio here (as pictured below).
+If you haven’t already, fork our demo-portfolio [here](https://github.com/cogrammers/aws-workshop-node-app) (as pictured below).
 
 ![](https://cdn-images-1.medium.com/max/720/1*byiJPcMS6_8D40xMmUTU1A.png)
 
@@ -263,4 +263,48 @@ export REPLACEMENT="\"username\": \"$USER\","
 sed -i.bak 's/"username".*/'"$REPLACEMENT"'/g' server/config.json
 rm server/config.json.bak 
 echo "Migrating the database"
-./node_modules/.bin/sequelize db:migrate ```
+./node_modules/.bin/sequelize db:migrate 
+```
+
+### Editing our config.json file with Vim to include our username
+Now, we have to get into the project files and manipulate them a little bit. If we were working with a *local* server, we might just use an IDE (Integrated Development Environment) like Atom or Sublime. The command to open our current directory to work on our project would look something like this: `$ atom .`  — including the period which means current directory.
+
+Since we are working with a remote server, today we are going to use Vim.
+
+*“Vim is a highly configurable text editor built to make creating and changing any kind of text very efficient.” * — vim.org
+
+That being said, it can be difficult to exit out of Vim. If you get stuck and your instincts seem to have run away with the circus in Vim-land, check [this](https://www.digitalocean.com/community/tutorials/installing-and-using-the-vim-text-editor-on-a-cloud-server) & [this](https://www.cyberciti.biz/faq/linux-unix-vim-save-and-quit-command/) out.
+
+In our SSH:
+
+`$ brew install vim` 
+Install Vim
+
+`$ ls` 
+List items in the root project folder. We want to edit our config.json file which is located in the server directory.
+
+$ cd server && ls 
+Now we see config.json listed and we will edit it in the console with Vim.
+
+`$ echo $USER `
+This command tells us our root username that we will apply in the config.json file. Root user is ubuntu.
+
+`$ vim config.json` 
+This opens our file in Vim
+
+`$ i `
+This puts us into edit-text mode
+
+Using the arrow keys on your keyboard, navigate to the current username and replace `process.env[“USER”]` with `"ubuntu"` so that the line now reads: `"username": "ubuntu",`  — that comma is important at the end there.
+
+Navigate to the current host IP address at `127.0.0.1:5432` and change it to our instance’s IP that we logged into our SSH with. For me, the new host IP is `34.217.73.232`, so now this line reads as follows: `"host": "34.217.73.232",` — again with the comma.
+
+This is setting us up for smooth sailing with our Postgresql database. Postgres likes to know who is in charge of the database in use. We are letting it know that ubuntu is.
+
+Hit `esc` on your keyboard. While you are in edit mode, hitting esc brings you into normal mode and then if you type `:x` and hit enter, our work is saved and we have successfully exited Vim!
+
+Good work.
+
+See if you can use Vim to go back into the doc and confirm that the work we just did is saved.
+
+### The next step is deployment! Dun-dun-dun-daaaa!
