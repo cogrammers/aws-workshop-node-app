@@ -7,7 +7,7 @@ $ git clone https://github.com/<YOUR_USERNAME>/aws-workshop-node-app.git
 $ cd aws-workshop-node-app
 ```    
 
-Run script to install dependencies and create and migrate postgres database:    
+Run script to install dependencies and create and migrate postgres database (**Note**: this will only work on a Mac. If you have a PC, flag one of us down):    
 ```shell
 $ ./setup/mac.sh
 ```    
