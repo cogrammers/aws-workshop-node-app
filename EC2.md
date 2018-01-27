@@ -234,8 +234,6 @@ This puts us into edit-text mode
 
 Using the arrow keys on your keyboard, navigate to the current username and replace `process.env[“USER”]` with `"ubuntu"` so that the line now reads: `"username": "ubuntu",`  —  that comma is important at the end there. 
 
-Navigate to the current host IP address at `127.0.0.1:5432` and change it to our instance’s IP that we logged into our SSH with. For me, the new host IP is `34.217.73.232`, so now this line reads as follows: `"host": "34.217.73.232",` — again with the comma.    
-
 Hit `esc` on your keyboard. While you are in edit mode, hitting esc brings you into normal mode and then if you type `:x` and hit enter, our work is saved and we have successfully exited Vim!   
 
 ```
