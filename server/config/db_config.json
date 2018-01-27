@@ -1,10 +1,9 @@
 {
   "development": {
-    "username": "gndweber",
-    "password": "root",
+    "username": "ubuntu",
+    "password": null,
     "database": "cogrammers-aws-dev",
-    "host": "127.0.0.1",
-    "port": 5432,
+    "host": "localhost",
     "dialect": "postgres"
   }
 }

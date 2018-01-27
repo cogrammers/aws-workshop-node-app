@@ -17,16 +17,15 @@
     "pg": "^6.4.2",
     "pg-hstore": "^2.3.2",
     "sequelize": "^4.32.1",
-    "sequelize-cli": "^3.2.0",
     "serve-favicon": "~2.4.2"
   },
   "devDependencies": {
     "browser-sync": "2.9.6",
-    "sequelize": "^4.32.1",
-    "sequelize-cli": "^3.1.0",
     "gulp": "^3.9.0",
     "gulp-jshint": "^1.11.2",
     "gulp-nodemon": "^2.0.4",
-    "jshint-stylish": "^2.0.1"
+    "jshint-stylish": "^2.0.1",
+    "sequelize": "^4.32.1",
+    "sequelize-cli": "^3.2.0"
   }
 }
