@@ -101,12 +101,6 @@ Client access to our website. This is standard.
 `HTTPS | TCP | port 443| Anywhere `
 _Secure_ client access to our website. This is standard and necessary if taking in any client info (username, password, etc.).
 
-`PostgreSQL | TCP | port 5432| Anywhere or (preferably) My IP`
-This allows us access to our database on the instance. Same as with SSH, if you are physically located where you normally would work on your website, assign `My IP` to the source. Otherwise, choose `Anywhere`.
-
-`All Traffic | TCP | ports 0 — 65535 | Anywhere `
-This is dangerous and not recommended for production.
-
 `Custom TCP | TCP | port 3000 | Anywhere` 
 This is the port for our Node.js app to be publicly accessible!
 
@@ -189,28 +183,63 @@ And we are in the instance again — this time with a shorter command
 `$ sudo apt-get update `
 Installs all recent package listings
 
-`$ sudo apt-get install nginx`
+`$ sudo apt-get install -y nginx nodejs npm postgresql postgresql-contrib`
 Installs NGINX, a super reliable web-server.
 
-`$ Y `
-Yes, we want to take up additional space with NGINX.
+`$ sudo update-rc.d postgresql enable`
+Set Postgres to start every time the instance launches
+
+`$ sudo -u postgresql psql --command "ALTER USER postgres WITH PASSWORD '<YOUR-PASSWORD-HERE>';" `
+
+`$ sudo vim /etc/postgresql/9.6/main/pg_hba.conf`
+Change peer to trust (restart required)
+
+`$ sudo vim /etc/postgresql/9.6/main/postgresql.conf`
+Change `listen_addresses = 'localhost'` to `listen_addresses = '*'`
+
+`$ sudo service postgresql restart`
+
+`$ sudo psql -h localhost -p 5432 -U postgres -W`
+
+Hit `ctrl-d`
+
+**FORK first**: `$ git clone https://github.com/<YOUR_USERNAME>/aws-workshop-node-app.git`
+
+`$ sudo -u postgres createdb cogrammers-aws-dev`
+
+`$ cd aws-workshop-node-app`
+
+`$ npm install`
+
+`$ node_modules/.bin/sequelize db:migrate`
+
+`$ sudo npm install -g pm2`
+
+`$ pm2 start ./bin/www`
+
+`$ wget -q -O - 'http://169.254.169.254/latest/meta-data/local-ipv4'`
+
+`$ sudo vim /etc/nginx/sites-available/default`
+
+```
+$ location / {
+        proxy_pass http://172.31.27.59:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+     }
+```
+
+```
+$ sudo nginx -t
+$ sudo /etc/init.d/nginx reload
+$ sudo service nginx start
+```
 
 *“NGINX accelerates content and application delivery, improves security, facilitates availability and scalability for the busiest web sites on the Internet.”*
 — As worded on NGINX.com.
-
-### Install Linuxbrew on your Ubuntu instance
-Linuxbrew is the Homebrew package manager for Linux.
-
-`$ sudo mkdir /home/linuxbrew`    
-`$ sudo chown $USER:$USER /home/linuxbrew`    
-`$ git clone https://github.com/Linuxbrew/brew.git /home/linuxbrew/.linuxbrew`    
-`$ echo 'export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"' >> ~/.profile`    
-`$ echo 'export MANPATH="/home/linuxbrew/.linuxbrew/share/man:$MANPATH"' >> ~/.profile`    
-`$ echo 'export INFOPATH="/home/linuxbrew/.linuxbrew/share/info:$INFOPATH"' >> ~/.profile`    
-`$ source ~/.profile`    
-`$ brew tap homebrew/core`     
-`$ brew update` 
-`$ brew doctor`
 
 ### Install Node and clone our Node project
 If you haven’t already, fork our demo-portfolio [here](https://github.com/cogrammers/aws-workshop-node-app) (as pictured below).
