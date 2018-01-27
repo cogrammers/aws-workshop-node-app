@@ -162,8 +162,7 @@ This will list the accessibility permissions. You can see in the image below tha
 `$ chmod 600 .ssh/demo-portfolio.pem`
 This command ensures that only I have access to read/write now as seen with the following command.
 
-`$ ls -alh .ssh `
-
+`$ ls -alh .ssh `    
 Now that our permissions are set, let’s log in to the instance’s SSH.
 
 `$ ssh ubuntu@<paste IP> -i .ssh/demo-portfolio.pem`
