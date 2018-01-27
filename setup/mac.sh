@@ -6,9 +6,10 @@ if command -v createdb &> /dev/null; then
   echo "Posgres already installed, skipping install..."
 else
   brew install postgresql
-  brew services start postgresql
-  createdb cogrammers-aws-dev
 fi
+brew services start postgresql
+echo "Now creating database instance"
+createdb cogrammers-aws-dev
 
 echo "Installing npm packages"
 npm install
