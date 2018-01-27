@@ -271,7 +271,8 @@ Now, we have to get into the project files and manipulate them a little bit. If 
 
 Since we are working with a remote server, today we are going to use Vim.
 
-*“Vim is a highly configurable text editor built to make creating and changing any kind of text very efficient.” * — vim.org
+*“Vim is a highly configurable text editor built to make creating and changing any kind of text very efficient.”*  
+—  vim.org
 
 That being said, it can be difficult to exit out of Vim. If you get stuck and your instincts seem to have run away with the circus in Vim-land, check [this](https://www.digitalocean.com/community/tutorials/installing-and-using-the-vim-text-editor-on-a-cloud-server) & [this](https://www.cyberciti.biz/faq/linux-unix-vim-save-and-quit-command/) out.
 
