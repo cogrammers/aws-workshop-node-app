@@ -1,6 +1,6 @@
 A simple Node app for cogrammers' AWS workshop. Will be used to demonstrate how to upload to EC2 instance on AWS.    
 ## Installation    
-**Fork** and clone down to local machine:    
+**Fork** repo to local machine:    
 
 ```shell
 $ git clone https://github.com/<YOUR_USERNAME>/aws-workshop-node-app.git
