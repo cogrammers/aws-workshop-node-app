@@ -19,7 +19,6 @@ Cogrammers is stoked to bring you a no-frills, minimalist, step-by-step guide to
 ## Technologies we will use:    
 * EC2
 * Ubuntu
-* Linuxbrew
 * NGINX
 * Node.js && NPM
 * Postgresql
@@ -35,7 +34,7 @@ It doesn’t matter what operating system you are working on today because we wi
 
 **Instance**: An EC2 instance refers to virtual server space. These instances are created on an Amazon Machine Image (AMI).
 
-**AMI**: An Amazon Machine Image is a template of a virtual machine environment. Worded another way, it is a snapshot of an operating system created for the purpose of computing in the cloud. Off of this image, the server (or instance) will run. For this demo, we will be using a Linux based operating system image.
+**AMI**: An Amazon Machine Image is a template of a virtual machine environment. Worded another way, it is a snapshot of an operating system created for the purpose of computing in the cloud. Off of this image, the server (or instance) will run. For this demo, we will be using a Ubuntu-based operating system image.
 
 **Container**: A container holds the whole of our virtual environment including operating system, server, code, libraries, and settings. Containers compartmentalize virtual working environments like keeping staging (the final draft of code before publishing) separate from development (rough drafts of code in test mode).
 
