@@ -270,9 +270,8 @@ $ sudo nginx -t
 $ sudo /etc/init.d/nginx reload
 $ sudo service nginx start
 ```
-Visit the url!
 
-This is setting us up for smooth sailing with our Postgresql database. Postgres likes to know who is in charge of the database in use. We are letting it know that ubuntu is.
+Grab the public DNS from our EC2 console and enter it into the address bar. Voila!
 
 
 
