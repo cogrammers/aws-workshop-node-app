@@ -12,15 +12,15 @@ Open up your AWS RDS console (https://console.aws.amazong.com/rds) and click `La
 
 You’ll now be prompted to choose a use case. We’re just playing around here, so choose `Dev/Test`. Next, we have to specify the details of our database instance. Leave the default license model info and DB engine version info values, and select the checkbox in the `Free Tier` box. Scroll down until you get to `Settings`, and add a name for your database instance as well as a master username and password for yourself. Click `Next`. 
 
-<img scr="public/stylesheets/Screen Shot 2018-01-25 at 2.38.21 PM.png"/>
+<img src="public/stylesheets/Screen Shot 2018-01-25 at 2.38.21 PM.png"/>
 
-<img scr="public/stylesheets/Screen Shot 2018-01-25 at 2.40.00 PM.png"/>
+<img src="public/stylesheets/Screen Shot 2018-01-25 at 2.40.00 PM.png"/>
 
 You should now be on the `Configure advanced settings` page. Leave all of the default values except for the database name at the very bottom of the page under `Database options`, and then click `Launch DB instance`. 
 
 Now we have to wait a few minutes for our RDS instance to launch. Once it’s ready, you’ll see the status change from _**creating**_ to _**available**_. (Warning: this could take a while!)
 
-<img scr="public/stylesheets/Postgres-Launch06.png"/>
+<img src="public/stylesheets/Postgres-Launch06.png"/>
 
 It’s important to remember that the database we set up is completely empty. We’ll go over migrating our local database to this RDS instance in a few minutes, but first, let’s just try connecting to it from the command line using the following prompt:
 
