@@ -51,7 +51,7 @@ Click on `Launch Instance`.
 ### Choosing which AMI to launch    
 We are going to launch our instance with the latest Ubuntu virtual machine (VM) in the form of an AMI.
 
-In the left-hand dashboard, select the AWS Marketplace tab and search for Ubuntu. There are many options here. Some are official images and some are unofficial or out of date.
+In the left-hand dashboard, select the AWS Marketplace tab and search for `Ubuntu`. There are many options here. Some are official images and some are unofficial or out of date.
 
 ![](https://cdn-images-1.medium.com/max/720/1*cZLjVcIbVJUoGOvpvNf2YQ.png)
 
@@ -62,8 +62,31 @@ Once there, search for your server’s region. You can find your server’s sear
 
 In the results you’ll be looking for:
 
-Amazon AWS, <your server’s region>, <the latest version of Ubuntu> (Quick tip: click on ‘Version’ until the list is organized from latest version down), and an instance type of hvm-ssd (stands for Hardware Virtual Machine & Solid State Drive).
+Amazon AWS, <your server’s region>, <the latest version of Ubuntu>, and an instance type of hvm-ssd (stands for Hardware Virtual Machine & Solid State Drive).
   
 Copy the AMI that matches your search results. In this case, our AMI is `ami-2eb40856`.
 
 ![](https://cdn-images-1.medium.com/max/720/1*s4Ejy3U1A_ngIm2Qp3W29w.png)
+
+Now, back to the AWS instance launch screen — choose the `Community AMIs` tab from the left-hand dashboard and search for your AMI key (as seen below). **It is important to note the root device type of ebs (Elastic Block Store). The root device is where your persistent storage (backup) of this instance lives. Without this, every time your instance is ever stopped and then started again, any state on your VM is considered temporary and is wiped clean.** Select your machine image.
+
+![](https://cdn-images-1.medium.com/max/720/1*xckBCTaSHi8wBkOBcuG8sA.png)
+
+### Choosing the instance type
+
+Next, we are going to choose the instance type. **The instance type is simply choosing how many resources you want to use.** We are going with the free tier version for our portfolio since we won’t need that many resources. Free tier is available for the first year of your AWS account.
+
+Hit Next until `Step 6: Configure Security Group` is reached.
+
+![](https://cdn-images-1.medium.com/max/720/1*0Y3OxB-Yp52NoqONUeOhUg.png)
+
+### Set up your security group
+
+Security groups filter outgoing/incoming traffic from an instance. This is AWS’s EC2 firewall settings.
+
+There are 2 ways to enable security settings: create new rules or select an existing set of rules. We are going to create new rules.
+
+Let’s label it as: `General SG`. Add a description of: *This SG will be assigned to all web based instances.*
+
+=> **NOTE**: If this was a larger project with a development environment and a separate production environment, we would have separate security groups for that. We won’t go over that right now, but it is essential when working on larger projects.
+
