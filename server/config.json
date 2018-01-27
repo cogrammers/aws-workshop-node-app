@@ -1,6 +1,6 @@
 {
   "development": {
-    "username": "gndweber",
+    "username": "USERNAME",
     "password": null,
     "database": "cogrammers-aws-dev",
     "host": "127.0.0.1",
