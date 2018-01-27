@@ -9,6 +9,20 @@ var routes = require('./server/routes/index');
 
 const app = express();
 
+const db = require('./server/models');
+
+db.sequelize.authenticate().then(() => {
+
+    console.log("Connected to database");
+
+    db.sequelize.sync({ force: true }).then(() => {
+        console.log("ready to start");
+    });
+
+}).catch((err) => {
+    console.error("Unable to connect to database > " + err);
+});
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
