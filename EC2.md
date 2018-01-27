@@ -197,29 +197,36 @@ Change peer to trust (restart required)
 `$ sudo vim /etc/postgresql/9.6/main/postgresql.conf`
 Change `listen_addresses = 'localhost'` to `listen_addresses = '*'`
 
-`$ sudo service postgresql restart`
-
-`$ sudo psql -h localhost -p 5432 -U postgres -W`
+```
+$ sudo service postgresql restart
+$ sudo psql -h localhost -p 5432 -U postgres -W
+```
 
 Hit `ctrl-d`
 
 **FORK first**: `$ git clone https://github.com/<YOUR_USERNAME>/aws-workshop-node-app.git`
 
 `$ sudo -u postgres createdb cogrammers-aws-dev`
+Create our database
 
-`$ cd aws-workshop-node-app`
+```
+$ cd aws-workshop-node-app
+$ npm install
+$ node_modules/.bin/sequelize db:migrate
+```
+Open up our project, install dependencies, and migrate database
 
-`$ npm install`
-
-`$ node_modules/.bin/sequelize db:migrate`
-
-`$ sudo npm install -g pm2`
-
-`$ pm2 start ./bin/www`
+```
+$ sudo npm install -g pm2
+$ pm2 start ./bin/www
+```
+Sets our app to always be running in the background
 
 `$ wget -q -O - 'http://169.254.169.254/latest/meta-data/local-ipv4'`
+Gives us the IP address of the machine
 
 `$ sudo vim /etc/nginx/sites-available/default`
+Change `server_name: _` to `server_name: *.amazonaws.com`
 
 ```
 $ location / {
@@ -237,6 +244,7 @@ $ sudo nginx -t
 $ sudo /etc/init.d/nginx reload
 $ sudo service nginx start
 ```
+Visit the url!
 
 *“NGINX accelerates content and application delivery, improves security, facilitates availability and scalability for the busiest web sites on the Internet.”*
 — As worded on NGINX.com.
