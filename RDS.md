@@ -10,6 +10,8 @@ If you already have the database you’d like to use for your application, you c
 
 Open up your AWS RDS console (https://console.aws.amazong.com/rds) and click `Launch a DB Instance`. When prompted to choose an engine option, select `PostgreSQL` and click `Next`. 
 
+<img src="public/stylesheets/Screen Shot 2018-01-26 at 9.55.02 PM.png"/>
+
 You’ll now be prompted to choose a use case. We’re just playing around here, so choose `Dev/Test`. Next, we have to specify the details of our database instance. Leave the default license model info and DB engine version info values, and select the checkbox in the `Free Tier` box. Scroll down until you get to `Settings`, and add a name for your database instance as well as a master username and password for yourself. Click `Next`. 
 
 <img src="public/stylesheets/Screen Shot 2018-01-25 at 2.38.21 PM.png"/>
