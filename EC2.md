@@ -93,16 +93,16 @@ Let’s label it as: `General SG`. Add a description of: *This SG will be assign
 Here is how we want to set up our secgroup rules:
 
 `SSH | TCP | port 22 | Anywhere or (preferably) My IP`
-SSH allows us remote private access to our instance. If you are physically located where you normally would work on your website, assign My IP to the source. Otherwise, choose Anywhere.
+SSH allows us remote private access to our instance. If you are physically located where you normally would work on your website, assign `My IP` to the source. Otherwise, choose `Anywhere`.
 
 `HTTP | TCP | port 80| Anywhere`
 Client access to our website. This is standard.
 
 `HTTPS | TCP | port 443| Anywhere `
-Secure client access to our website. This is standard and necessary if taking in any client info (username, password, etc.).
+_Secure_ client access to our website. This is standard and necessary if taking in any client info (username, password, etc.).
 
 `PostgreSQL | TCP | port 5432| Anywhere or (preferably) My IP`
-This allows us access to our database on the instance. Same as with SSH, if you are physically located where you normally would work on your website, assign My IP to the source. Otherwise, choose Anywhere.
+This allows us access to our database on the instance. Same as with SSH, if you are physically located where you normally would work on your website, assign `My IP` to the source. Otherwise, choose `Anywhere`.
 
 `All Traffic | TCP | ports 0 — 65535 | Anywhere `
 This is dangerous and not recommended for production.
@@ -154,7 +154,7 @@ This makes sure that we are in our root directory:
 `$ mv Downloads/demo-portfolio.pem ~/.ssh/`
 This moves the instance download to your ssh directory.
 
-** If the response is that you do not have an ssh directory, then use this command: `$ mkdir .ssh && chmod 700 .ssh` Then proceed with the previous command.** 
+**If the response is that you do not have an ssh directory, then use this command:** `$ mkdir .ssh && chmod 700 .ssh` **Then proceed with the previous command.** 
 
 `$ ls -alh .ssh`
 This will list the accessibility permissions. You can see in the image below that too many people have permissions: -rw-r — r — (owner can read/write, group can read, everyone can read)
@@ -195,3 +195,72 @@ Installs NGINX, a super reliable web-server.
 
 `$ Y `
 Yes, we want to take up additional space with NGINX.
+
+*“NGINX accelerates content and application delivery, improves security, facilitates availability and scalability for the busiest web sites on the Internet.”*
+— As worded on NGINX.com.
+
+### Install Linuxbrew on your Ubuntu instance
+Linuxbrew is the Homebrew package manager for Linux.
+
+`$ sudo mkdir /home/linuxbrew    
+$ sudo chown $USER:$USER /home/linuxbrew    
+$ git clone https://github.com/Linuxbrew/brew.git /home/linuxbrew/.linuxbrew    
+$ echo 'export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"' >> ~/.profile    
+$ echo 'export MANPATH="/home/linuxbrew/.linuxbrew/share/man:$MANPATH"' >> ~/.profile    
+$ echo 'export INFOPATH="/home/linuxbrew/.linuxbrew/share/info:$INFOPATH"' >> ~/.profile    
+$ source ~/.profile    
+$ brew tap homebrew/core     
+$ brew update    
+$ brew doctor`
+
+### Install Node and clone our Node project
+If you haven’t already, fork our demo-portfolio here (as pictured below).
+
+![](https://cdn-images-1.medium.com/max/720/1*byiJPcMS6_8D40xMmUTU1A.png)
+
+Then in our SSH (in our terminal):
+
+`$ brew install node `
+Get that Node framework onto our instance (this automatically installs NPM (Node Package Manager) too.
+
+Go to YOUR GitHub forked repo. Mine is pictured below.
+
+![](https://cdn-images-1.medium.com/max/720/1*-R6uVL-buTP6jUPI-uH0Mg.png)
+
+Copy the GitHub repo URL as seen below.
+
+![](https://cdn-images-1.medium.com/max/720/1*oNQX6erUe70FLrklARNxMg.png)
+
+Back in our SSH:
+
+`$ git clone https://github.com/<YOUR_USERNAME>/aws-workshop-node-app.git `
+Clone the repo onto our instance from your forked copy of the GitHub repo.
+
+`$ cd aws-workshop-node-app/ `
+Change directories into the project
+
+`$ ./setup/mac.sh`
+Install dependencies and set up Postgresql database. We have built a magical little script sheet that we are running here. It includes the word mac because it works with Homebrew — a Mac package manager for a console. It also works with Linuxbrew which you set up on our Ubuntu machine earlier :)
+
+To take a closer look at what is happening behind the scenes of this script, we can open up the mac.sh file that is located in our setup directory (./setup/mac.sh) and see this:
+
+``` #! /bin/bash
+set -euo pipefail
+# Install postgresql
+if command -v createdb &> /dev/null; then  
+  echo "Posgres already installed, skipping install..."
+else
+  brew install postgresql  
+  brew services start postgresql
+  createdb cogrammers-aws-dev
+fi 
+echo "Installing npm packages"
+npm install
+npm install --save sequelize-cli
+npm install --save pg@6 pg-hstore 
+echo "Setting up config file"
+export REPLACEMENT="\"username\": \"$USER\","
+sed -i.bak 's/"username".*/'"$REPLACEMENT"'/g' server/config.json
+rm server/config.json.bak 
+echo "Migrating the database"
+./node_modules/.bin/sequelize db:migrate ```
