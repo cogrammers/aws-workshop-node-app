@@ -162,7 +162,7 @@ This will list the accessibility permissions. You can see in the image below tha
 `$ chmod 600 .ssh/demo-portfolio.pem`
 This command ensures that only I have access to read/write now as seen with the following command.
 
-`$ ls -alh .ssh `    
+`$ ls -alh .ssh `
 Now that our permissions are set, let’s log in to the instance’s SSH.
 
 `$ ssh ubuntu@<paste IP> -i .ssh/demo-portfolio.pem`
@@ -283,7 +283,7 @@ Install Vim
 `$ ls` 
 List items in the root project folder. We want to edit our config.json file which is located in the server directory.
 
-$ cd server && ls 
+`$ cd server && ls` 
 Now we see config.json listed and we will edit it in the console with Vim.
 
 `$ echo $USER `
