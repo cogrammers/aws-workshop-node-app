@@ -154,48 +154,48 @@ This moves the instance download to your ssh directory.
 This will list the accessibility permissions. You can see in the image below that too many people have permissions: -rw-r — r — (owner can read/write, group can read, everyone can read)
 
 `$ chmod 600 .ssh/demo-portfolio.pem`    
-This command ensures that only I have access to read/write now as seen with the following command.
+This command ensures that only I have access to read/write now as seen with the following command.    
 
 `$ ls -alh .ssh `    
-Now that our permissions are set, let’s log in to the instance’s SSH.
+Now that our permissions are set, let’s log in to the instance’s SSH.    
 
 `$ ssh ubuntu@<paste IP> -i .ssh/demo-portfolio.pem`    
-Logging into our instance.
+Logging into our instance.    
 
 `$ yes `    
-The first time you log into an instance, you need to give your fingerprint.
+The first time you log into an instance, you need to give your fingerprint.    
 
 `$ exit`    
-We will exit the instance for now and add our key as an identity so that we don’t always have to specify which key we want to use.
+We will exit the instance for now and add our key as an identity so that we don’t always have to specify which key we want to use.    
 
 `$ ssh-add -l`    
-Lists identities. Our key is not listed yet.
+Lists identities. Our key is not listed yet.    
 
 `$ ssh-add .ssh/demo-portfolio.pem`    
-Adds our key as identity
+Adds our key as identity.    
 
 `$ ssh-add -l`    
-See key as identity now
+See key as identity now    
 
 `$ ssh ubuntu@<IP>`    
-And we are in the instance again — this time with a shorter command
+And we are in the instance again — this time with a shorter command    
 
 `$ sudo apt-get update `    
-Installs all recent package listings
+Installs all recent package listings    
 
 `$ sudo apt-get install -y nginx nodejs npm postgresql postgresql-contrib`    
-Installs NGINX, a super reliable web-server.
+Installs NGINX, a super reliable web-server.    
 
 `$ sudo update-rc.d postgresql enable`    
-Set Postgres to start every time the instance launches
+Set Postgres to start every time the instance launches    
 
 `$ sudo -u postgresql psql --command "ALTER USER postgres WITH PASSWORD '<YOUR-PASSWORD-HERE>';" `    
 
 `$ sudo vim /etc/postgresql/9.6/main/pg_hba.conf`    
-Change peer to trust (restart required)
+Change peer to trust (restart required)    
 
 `$ sudo vim /etc/postgresql/9.6/main/postgresql.conf`    
-Change `listen_addresses = 'localhost'` to `listen_addresses = '*'`
+Change `listen_addresses = 'localhost'` to `listen_addresses = '*'`    
 
 ```
 $ sudo service postgresql restart
@@ -204,29 +204,57 @@ $ sudo psql -h localhost -p 5432 -U postgres -W
 
 Hit `ctrl-d`
 
-**FORK first**: `$ git clone https://github.com/<YOUR_USERNAME>/aws-workshop-node-app.git`
+**FORK first**: `$ git clone https://github.com/<YOUR_USERNAME>/aws-workshop-node-app.git`    
+
+![](https://cdn-images-1.medium.com/max/720/1*-R6uVL-buTP6jUPI-uH0Mg.png)    
+![](https://cdn-images-1.medium.com/max/720/1*oNQX6erUe70FLrklARNxMg.png)
 
 `$ sudo -u postgres createdb cogrammers-aws-dev`    
-Create our database
+Create our database    
 
 ```
 $ cd aws-workshop-node-app
 $ npm install
-$ node_modules/.bin/sequelize db:migrate
 ```
-Open up our project, install dependencies, and migrate database
+Open up our project, install dependencies    
+
+Since we are working with a remote server today, we are going to use Vim (instead of an external text editor) to modify our config. Run the following commands: 
+
+`$ ls`  
+List items in the root project folder. We want to edit our config.json file which is located in the server directory.
+
+`$ cd server && ls`   
+Now we see config.json listed and we will edit it in the console with Vim.
+
+`$ echo $USER `    
+This command tells us our root username that we will apply in the config.json file. Root user is ubuntu.
+
+`$ vim config.json`    
+This opens our file in Vim
+
+`$ i `    
+This puts us into edit-text mode
+
+Using the arrow keys on your keyboard, navigate to the current username and replace `process.env[“USER”]` with `"ubuntu"` so that the line now reads: `"username": "ubuntu",`  —  that comma is important at the end there. 
+
+Navigate to the current host IP address at `127.0.0.1:5432` and change it to our instance’s IP that we logged into our SSH with. For me, the new host IP is `34.217.73.232`, so now this line reads as follows: `"host": "34.217.73.232",` — again with the comma.    
+
+Hit `esc` on your keyboard. While you are in edit mode, hitting esc brings you into normal mode and then if you type `:x` and hit enter, our work is saved and we have successfully exited Vim!   
 
 ```
+$ node_modules/.bin/sequelize db:migrate
 $ sudo npm install -g pm2
 $ pm2 start ./bin/www
 ```
-Sets our app to always be running in the background
+Migrates our database, installs our dependencies, and sets our app to always be running in the background    
+
+### The next step is deployment! Dun-dun-dun-daaaa!
 
 `$ wget -q -O - 'http://169.254.169.254/latest/meta-data/local-ipv4'`    
-Gives us the IP address of the machine
+Gives us the IP address of the machine    
 
 `$ sudo vim /etc/nginx/sites-available/default`    
-Change `server_name: _` to `server_name: *.amazonaws.com`
+Change `server_name: _` to `server_name: *.amazonaws.com`    
 
 ```
 $ location / {
@@ -246,102 +274,7 @@ $ sudo service nginx start
 ```
 Visit the url!
 
-*“NGINX accelerates content and application delivery, improves security, facilitates availability and scalability for the busiest web sites on the Internet.”*
-— As worded on NGINX.com.
-
-### Install Node and clone our Node project
-If you haven’t already, fork our demo-portfolio [here](https://github.com/cogrammers/aws-workshop-node-app) (as pictured below).
-
-![](https://cdn-images-1.medium.com/max/720/1*byiJPcMS6_8D40xMmUTU1A.png)
-
-Then in our SSH (in our terminal):
-
-`$ brew install node `
-Get that Node framework onto our instance (this automatically installs NPM (Node Package Manager) too.
-
-Go to YOUR GitHub forked repo. Mine is pictured below.
-
-![](https://cdn-images-1.medium.com/max/720/1*-R6uVL-buTP6jUPI-uH0Mg.png)
-
-Copy the GitHub repo URL as seen below.
-
-![](https://cdn-images-1.medium.com/max/720/1*oNQX6erUe70FLrklARNxMg.png)
-
-Back in our SSH:
-
-`$ git clone https://github.com/<YOUR_USERNAME>/aws-workshop-node-app.git `
-Clone the repo onto our instance from your forked copy of the GitHub repo.
-
-`$ cd aws-workshop-node-app/ `
-Change directories into the project
-
-`$ ./setup/mac.sh`
-Install dependencies and set up Postgresql database. We have built a magical little script sheet that we are running here. It includes the word mac because it works with Homebrew — a Mac package manager for a console. It also works with Linuxbrew which you set up on our Ubuntu machine earlier :)
-
-To take a closer look at what is happening behind the scenes of this script, we can open up the mac.sh file that is located in our setup directory (./setup/mac.sh) and see this:
-
-``` #! /bin/bash
-set -euo pipefail
-# Install postgresql
-if command -v createdb &> /dev/null; then  
-  echo "Posgres already installed, skipping install..."
-else
-  brew install postgresql  
-  brew services start postgresql
-  createdb cogrammers-aws-dev
-fi 
-echo "Installing npm packages"
-npm install
-npm install --save sequelize-cli
-npm install --save pg@6 pg-hstore 
-echo "Setting up config file"
-export REPLACEMENT="\"username\": \"$USER\","
-sed -i.bak 's/"username".*/'"$REPLACEMENT"'/g' server/config.json
-rm server/config.json.bak 
-echo "Migrating the database"
-./node_modules/.bin/sequelize db:migrate 
-```
-
-### Editing our config.json file with Vim to include our username
-Now, we have to get into the project files and manipulate them a little bit. If we were working with a *local* server, we might just use an IDE (Integrated Development Environment) like Atom or Sublime. The command to open our current directory to work on our project would look something like this: `$ atom .`  — including the period which means current directory.
-
-Since we are working with a remote server, today we are going to use Vim.
-
-*“Vim is a highly configurable text editor built to make creating and changing any kind of text very efficient.”*  
-—  vim.org
-
-That being said, it can be difficult to exit out of Vim. If you get stuck and your instincts seem to have run away with the circus in Vim-land, check [this](https://www.digitalocean.com/community/tutorials/installing-and-using-the-vim-text-editor-on-a-cloud-server) & [this](https://www.cyberciti.biz/faq/linux-unix-vim-save-and-quit-command/) out.
-
-In our SSH:
-
-`$ brew install vim` 
-Install Vim
-
-`$ ls` 
-List items in the root project folder. We want to edit our config.json file which is located in the server directory.
-
-`$ cd server && ls` 
-Now we see config.json listed and we will edit it in the console with Vim.
-
-`$ echo $USER `
-This command tells us our root username that we will apply in the config.json file. Root user is ubuntu.
-
-`$ vim config.json` 
-This opens our file in Vim
-
-`$ i `
-This puts us into edit-text mode
-
-Using the arrow keys on your keyboard, navigate to the current username and replace `process.env[“USER”]` with `"ubuntu"` so that the line now reads: `"username": "ubuntu",`  — that comma is important at the end there.
-
-Navigate to the current host IP address at `127.0.0.1:5432` and change it to our instance’s IP that we logged into our SSH with. For me, the new host IP is `34.217.73.232`, so now this line reads as follows: `"host": "34.217.73.232",` — again with the comma.
-
 This is setting us up for smooth sailing with our Postgresql database. Postgres likes to know who is in charge of the database in use. We are letting it know that ubuntu is.
 
-Hit `esc` on your keyboard. While you are in edit mode, hitting esc brings you into normal mode and then if you type `:x` and hit enter, our work is saved and we have successfully exited Vim!
 
-Good work.
 
-See if you can use Vim to go back into the doc and confirm that the work we just did is saved.
-
-### The next step is deployment! Dun-dun-dun-daaaa!
