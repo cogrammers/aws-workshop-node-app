@@ -62,7 +62,7 @@ Once there, search for your server’s region. You can find your server’s sear
 
 In the results you’ll be looking for:
 
-Amazon AWS, <your server’s region>, <the latest version of Ubuntu>, and an instance type of hvm-ssd (stands for Hardware Virtual Machine & Solid State Drive).
+Amazon AWS, _your server’s region_, _the latest version of Ubuntu_, and an instance type of **hvm-ssd** (stands for Hardware Virtual Machine & Solid State Drive).
   
 Copy the AMI that matches your search results. In this case, our AMI is `ami-2eb40856`.
 
@@ -90,3 +90,108 @@ Let’s label it as: `General SG`. Add a description of: *This SG will be assign
 
 => **NOTE**: If this was a larger project with a development environment and a separate production environment, we would have separate security groups for that. We won’t go over that right now, but it is essential when working on larger projects.
 
+Here is how we want to set up our secgroup rules:
+
+`SSH | TCP | port 22 | Anywhere or (preferably) My IP`
+SSH allows us remote private access to our instance. If you are physically located where you normally would work on your website, assign My IP to the source. Otherwise, choose Anywhere.
+
+`HTTP | TCP | port 80| Anywhere`
+Client access to our website. This is standard.
+
+`HTTPS | TCP | port 443| Anywhere `
+Secure client access to our website. This is standard and necessary if taking in any client info (username, password, etc.).
+
+`PostgreSQL | TCP | port 5432| Anywhere or (preferably) My IP`
+This allows us access to our database on the instance. Same as with SSH, if you are physically located where you normally would work on your website, assign My IP to the source. Otherwise, choose Anywhere.
+
+`All Traffic | TCP | ports 0 — 65535 | Anywhere `
+This is dangerous and not recommended for production.
+
+`Custom TCP | TCP | port 3000 | Anywhere` 
+This is the port for our Node.js app to be publicly accessible!
+
+Hit **Review and Launch**.
+
+![](https://cdn-images-1.medium.com/max/720/1*cBs-SwnzUQSR3sKV165hZA.png)
+
+Hit **Launch**.
+
+![](https://cdn-images-1.medium.com/max/720/1*t4jx7waOWKEMks5I-qPqtw.png)
+
+### Downloading the key-pair
+ 
+=> **NOTE**: This is the only time we will be able to download this key pair. It should go straight to our downloads  —-  leave it there for now.
+
+Select `Create a new key pair` from the dropdown menu. Let’s name it `demo-portfolio`.
+
+Click on `Download Key Pair` and make sure it is saved.
+
+Now click on `Launch.`
+
+![](https://cdn-images-1.medium.com/max/720/1*PmK2PUfmxzypTGKklwrjVw.png)
+
+**Instances are launching…**
+This might take a few minutes.
+
+Click on our instance id.
+
+![](https://cdn-images-1.medium.com/max/720/1*_tx44_gxU3dJOpyEK73Y8A.png)
+
+### Now for connecting to our instance!
+Copy the instance’s IP.
+
+![](https://cdn-images-1.medium.com/max/720/1*lckzhiulN6Rm-PVBb8NMHA.png)
+
+### Open up your local terminal and set permissions on our instance
+
+*(If at any point, you would like to know more about what exactly these commands are doing, check out this beautiful site.)*
+
+We are going to move the instance into our ssh folder and give read-and-write access to only ourselves with these commands.
+
+`$ cd ~ `
+This makes sure that we are in our root directory:
+
+`$ mv Downloads/demo-portfolio.pem ~/.ssh/`
+This moves the instance download to your ssh directory.
+
+** If the response is that you do not have an ssh directory, then use this command: `$ mkdir .ssh && chmod 700 .ssh` Then proceed with the previous command.** 
+
+`$ ls -alh .ssh`
+This will list the accessibility permissions. You can see in the image below that too many people have permissions: -rw-r — r — (owner can read/write, group can read, everyone can read)
+
+`$ chmod 600 .ssh/demo-portfolio.pem`
+This command ensures that only I have access to read/write now as seen with the following command.
+
+`$ ls -alh .ssh `
+
+Now that our permissions are set, let’s log in to the instance’s SSH.
+
+`$ ssh ubuntu@<paste IP> -i .ssh/demo-portfolio.pem`
+Logging into our instance.
+
+`$ yes `
+The first time you log into an instance, you need to give your fingerprint.
+
+`$ exit`
+We will exit the instance for now and add our key as an identity so that we don’t always have to specify which key we want to use.
+
+`$ ssh-add -l`
+Lists identities. Our key is not listed yet.
+
+`$ ssh-add .ssh/demo-portfolio.pem`
+Adds our key as identity
+
+`$ ssh-add -l`
+See key as identity now
+
+`$ ssh ubuntu@<IP>`
+And we are in the instance again — this time with a shorter command
+
+`$ sudo apt-get update `
+Installs all recent package listings
+
+`$ sudo apt-get install nginx`
+Installs NGINX, a super reliable web-server.
+
+`$ Y `
+Yes, we want to take up additional space with NGINX.
