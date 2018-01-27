@@ -186,7 +186,7 @@ Installs NGINX, a super reliable web-server.
 `$ sudo update-rc.d postgresql enable`    
 Set Postgres to start every time the instance launches    
 
-`$ sudo -u postgresql psql --command "ALTER USER postgres WITH PASSWORD '<YOUR-PASSWORD-HERE>';" `    
+`$ sudo -u postgres psql --command "ALTER USER postgres WITH PASSWORD '<YOUR-PASSWORD-HERE>';" `    
 
 `$ sudo vim /etc/postgresql/9.6/main/pg_hba.conf`    
 Change peer to trust (restart required)    
