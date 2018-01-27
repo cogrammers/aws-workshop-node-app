@@ -106,8 +106,6 @@ This is the port for our Node.js app to be publicly accessible!
 
 Hit **Review and Launch**.
 
-![](https://cdn-images-1.medium.com/max/720/1*cBs-SwnzUQSR3sKV165hZA.png)
-
 Hit **Launch**.
 
 ![](https://cdn-images-1.medium.com/max/720/1*t4jx7waOWKEMks5I-qPqtw.png)
